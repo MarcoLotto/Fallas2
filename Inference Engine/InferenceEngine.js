@@ -10,7 +10,7 @@ function InferenceEngine(conceptUniverse){
   this.getInferenceUsingForward = function(knownConcepts){
         this.forwardIE.getInference(knownConcepts);
   }
-  this.getInferenceUsingBackward = function(knownConcepts){
-        this.backwardIE.getInference(knownConcepts);
+  this.getInferenceUsingBackward = function(knownConcepts, finalConcept){
+        this.backwardIE.getInference(knownConcepts, finalConcept);
   }
 }

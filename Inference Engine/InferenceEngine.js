@@ -11,6 +11,6 @@ function InferenceEngine(conceptUniverse){
         this.forwardIE.getInference(knownConcepts);
   }
   this.getInferenceUsingBackward = function(knownConcepts, finalConcept){
-        this.backwardIE.getInference(knownConcepts, finalConcept);
+        return this.backwardIE.getInference(knownConcepts, finalConcept);
   }
 }

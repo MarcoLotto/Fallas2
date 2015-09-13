@@ -47,7 +47,12 @@
 
     // Corremos el motor de inferencia e imprimimos el resultado
     var inferenceEngine = new InferenceEngine(universe);
-    inferenceEngine.getInferenceUsingBackward(knownConcepts, finalConcept);
+    if(inferenceEngine.getInferenceUsingBackward(knownConcepts, finalConcept)){
+      document.write("<br>Se logro inferir el concepto: " + finalConcept.value + "<br><br>");
+    }
+    else{
+      document.write("<br>No fue posible inferir el concepto: " + finalConcept.value + "<br><br>");
+    }
 
     // Mostramos el resultado obtenido
     writeToScreen("Conceptos luego de inferencia", knownConcepts);

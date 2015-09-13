@@ -30,7 +30,6 @@
     for (var i = 0; i < conceptBag.concepts.length; i++) {
         document.write(conceptBag.concepts[i].value + "<br>");
     }
-    document.write("<br>");
   }
 
   function runExample(){
@@ -43,9 +42,17 @@
     var knownConcepts = buildKnownConcepts();
     writeToScreen("Conceptos antes de inferencia", knownConcepts);
 
+    // Definimos el objetivo al que queremos llegar infiriendo
+    var finalConcept = new Concept("v", []);
+
     // Corremos el motor de inferencia e imprimimos el resultado
     var inferenceEngine = new InferenceEngine(universe);
-    inferenceEngine.getInferenceUsingForward(knownConcepts);
+    if(inferenceEngine.getInferenceUsingForward(knownConcepts, finalConcept)){
+      document.write("<br>Se logro inferir el concepto: " + finalConcept.value + "<br><br>");
+    }
+    else{
+      document.write("<br>No fue posible inferir el concepto: " + finalConcept.value + "<br><br>");
+    }
 
     // Mostramos el resultado obtenido
     writeToScreen("Conceptos luego de inferencia", knownConcepts);

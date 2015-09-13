@@ -6,9 +6,9 @@ function InferenceEngine(conceptUniverse){
   this.forwardIE = new ForwardIE(conceptUniverse);
   this.backwardIE = new BackwardIE(conceptUniverse);
 
-  // Completa el array de conceptos conocidos con aquellos que pudo inferir del universo de conceptos
-  this.getInferenceUsingForward = function(knownConcepts){
-        this.forwardIE.getInference(knownConcepts);
+  // Completa el array de conceptos conocidos con aquellos que pudo inferir del universo de conceptos y devuelve true si logro inferir
+  this.getInferenceUsingForward = function(knownConcepts, finalConcept){
+        return this.forwardIE.getInference(knownConcepts, finalConcept);
   }
   this.getInferenceUsingBackward = function(knownConcepts, finalConcept){
         return this.backwardIE.getInference(knownConcepts, finalConcept);

@@ -4,7 +4,7 @@ function ForwardIE(universeConceptBag){
   this.universeConceptBag = universeConceptBag;
 
   // Completa los knownConcepts con toda la informacion que puede inferir a partir del universo de conceptos
-  this.getInference = function(knownConcepts){
+  this.getInference = function(knownConcepts, finalConcept){
     var usedConcepts = new ConceptBag();
     var conceptUniverse = this.universeConceptBag.concepts;
     var knownConceptsLastIterationSize = -1;
@@ -18,11 +18,17 @@ function ForwardIE(universeConceptBag){
           if(conceptApply(concept, knownConcepts) && (!usedConcepts.hasConcept(concept))){
             if(!knownConcepts.hasConcept(concept)){
                 knownConcepts.add(concept);
+                // Si pudimos inferir el valor que buscabamos, terminamos aca
+                if(concept.value == finalConcept.value){
+                  return true;
+                }
             }
             usedConcepts.add(concept);
           }
       }
     }
+    // Revisamos todas las inferencias posibles pero no pudimos inferir el concepto buscado
+    return false;
   }
 
   function conceptApply(concept, knownConcepts){

@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  
+    <title>Fallas 2 - Motores de Inferencia</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/signin.css" rel="stylesheet">
+    
+    <script src="jquery-1.11.3.min.js"></script>    
+    <script src="InferenceEngine.js"></script>
+    <script src="ForwardIE.js"></script>
+    <script src="BackwardIE.js"></script>
+    <script src="utils.js"></script>
+
+  </head>
+
+  <body>
+    <div class="container">
+
+    <div class="form-signin">
+      <h3 class="form-signin-heading" style="text-align: center"> Conceptos Conocidos</h3>
+      <ul class="list-inline fill-ul" id="initialConcepts">
+        <li class="list-group-item fill-li">P</li>
+        <li class="list-group-item fill-li">Q</li>
+        <li class="list-group-item fill-li">R</li>
+      </ul>
+
+      <!-- <h3 class="form-signin-heading" style="text-align: center"> Universo</h3> -->
+      <button class="btn btn-block" onclick="toogleUniverse()">Universo de Conceptos</button>
+      <div id="concepUniverse" hidden="true">
+          <table class="table table-striped">
+            <thead>
+              <tr><th>Concepto</th><th>Entradas</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>P</td><td>[]</td></tr>
+              <tr><td>Q</td><td>[]</td></tr>
+              <tr><td>R</td><td>[P, Q]</td></tr>
+              <tr><td>S</td><td>[]</td></tr>
+              <tr><td>T</td><td>[R]</td></tr>
+              <tr><td>U</td><td>[S, T]</td></tr>
+              <tr><td>V</td><td>[S, R]</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="control-group">
+            <label class="radio">
+              <input type="radio" name="fwd-bwd-choice" id="useForward" value="Forward" checked>
+              Forward
+            </label>
+            <label class="radio">
+              <input type="radio" name="fwd-bwd-choice" id="useBackward" value="Backward">
+              Backward
+            </label>
+        </div>
+
+        <input type="text" class="form-control" id="finalConcept" placeholder="Concepto...">
+        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="executeInference()">Inferir Concepto</button>
+
+
+      <div id="inferenceResult" hidden="true">
+        <h3 class="form-signin-heading" style="text-align: center">Resultado de Inferencia</h3>
+        
+        <p class="form-signin-heading" id="foundConcept"><p>
+        <ul class="list-inline fill-ul" id="resultList">
+          
+        </ul>
+      </div>
+      </div> <!-- form-->
+    </div> <!-- /container -->
+
+  </body>
+
+  <script type="text/javascript">
+
+    function executeInference() {
+      // Creamos el universo de conceptos
+      var universe = buildUniverse();
+      // Nos guardamos algunos conceptos conocidos
+      var knownConcepts = buildKnownConcepts();
+      
+      $("#resultList").empty();
+
+      // Definimos el concepto final al que se quiere llegar
+      var finalConceptName = $("#finalConcept")[0].value;
+      if (!finalConceptName){
+        return;
+      }
+
+      if (['p', 'q', 'r', 's', 't', 'u', 'v'].indexOf(finalConceptName.toLowerCase()) >= 0) {
+        
+        var finalConcept = new Concept(finalConceptName.toLowerCase(), []);
+        // Corremos el motor de inferencia e imprimimos el resultado
+        var engine = $('#useForward').is(':checked') ? new ForwardIE(universe) : new BackwardIE(universe);
+
+        if (engine.getInference(knownConcepts, finalConcept)){
+          $("#foundConcept").text("Se logro inferir el concepto: " + finalConcept.value);
+          showResults(knownConcepts);
+
+        } else {
+          $("#foundConcept").text("No fue posible inferir el concepto: " + finalConcept.value);
+        }
+          
+      } else {
+        console.log("Invalido: " + finalConceptName);
+        $("#foundConcept").text("Concepto invalido");
+      }
+
+      $("#inferenceResult").show();
+    }
+
+    function toogleUniverse () {
+      $("#concepUniverse").toggle();
+    }
+
+    function showResults (conceptBag) {
+      for (var i = 0; i < conceptBag.concepts.length; i++) {
+          $("#resultList").append('<li class="list-group-item fill-li">'+conceptBag.concepts[i].value.toUpperCase()+"</li>");
+        }
+    }
+  </script>
+
+
+</html>
+

@@ -1,6 +1,6 @@
 document.write('<script src="Concept.js"></script>');
 
-// Es simplemente un contenedor de coneptos para permitir buscar e iterar conceptos por su valor
+// Es simplemente un contenedor de conceptos para permitir buscar e iterar conceptos por su valor
 function ConceptBag(){
 
   this.concepts = [];

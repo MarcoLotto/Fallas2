@@ -1,4 +1,5 @@
 document.write('<script src="ConceptBag.js"></script>');
+document.write('<script src="utils.js"></script>');
 
 function ForwardIE(universeConceptBag){
   this.universeConceptBag = universeConceptBag;
@@ -8,6 +9,12 @@ function ForwardIE(universeConceptBag){
     var usedConcepts = new ConceptBag();
     var conceptUniverse = this.universeConceptBag.concepts;
     var knownConceptsLastIterationSize = -1;
+	
+	// Verificamos si el concepto ya esta entre los conceptos conocidos
+	for (var i = 0; i < knownConcepts.concepts.length; i++) {
+		if(finalConcept.value == knownConcepts.concepts[i].value)
+			return true;
+	}
     // Iteramos sobre los elementos hasta que no haya cambios (REVIEW: Seguro hay una forma mas performante que esta)
     while(knownConcepts.concepts.length != knownConceptsLastIterationSize){
       knownConceptsLastIterationSize = knownConcepts.concepts.length;
@@ -28,7 +35,8 @@ function ForwardIE(universeConceptBag){
       }
     }
     // Revisamos todas las inferencias posibles pero no pudimos inferir el concepto buscado
-    return false;
+    logToConsole("Inferencia fallida. Conceptos utilizados: ", usedConcepts);
+	return false;
   }
 
   function conceptApply(concept, knownConcepts){

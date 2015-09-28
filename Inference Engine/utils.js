@@ -27,3 +27,10 @@ function buildUniverse(){
         document.write(conceptBag.concepts[i].value + "<br>");
     }
   }
+  
+  function logToConsole(title, conceptBag){
+    console.log(title);
+    for (var i = 0; i < conceptBag.concepts.length; i++) {
+        console.log(conceptBag.concepts[i].value);
+    }
+  }

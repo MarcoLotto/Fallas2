@@ -33,7 +33,8 @@ function BackwardIE(conceptUniverse){
     for (var i = 0; i < finalConcept.inputConcepts.length; i++) {
         var concept = finalConcept.inputConcepts[i];
         if(!this.internalGetInference(knownConcepts, concept)){
-          return false;
+			console.log("No se pudo inferir: " + concept.value);
+			return false;
         }
     }
     // Ya comprobamos que podemos llegar al concepto, los agregamos como conceptos conocidos

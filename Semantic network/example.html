@@ -1,0 +1,41 @@
+<html>
+<head>
+  <script src="RelationResolver.js"></script>
+  <script>
+  function runExample(){
+    document.write("RED SEMÁNTICA" + "<br><br>");
+
+    // Creamos los conceptos
+	var cBelo = new Concept("Belo");
+	var cTino = new Concept("Tino");
+	var cSusi = new Concept("Susi");
+	var cPerro = new Concept("Perro");
+	var cGato = new Concept("Gato");
+	var cMamifero = new Concept("Mamifero");
+	
+	// Creamos las relaciones
+	cBelo.addRelation("es_un", cPerro);
+	cTino.addRelation("es_un", cPerro);
+	cSusi.addRelation("es_un", cGato);
+	cPerro.addRelation("es_un", cMamifero);
+	cGato.addRelation("es_un", cMamifero);
+	
+	// Verificamos algunas relaciones con herencia
+	var result = hasRelation(cBelo, "es_un", cMamifero);
+	document.write("¿Belo es un mamifero?: " + result + "<br>");  // Si
+	
+	result = hasRelation(cSusi, "es_un", cMamifero);
+	document.write("¿Susi es un mamifero?: " + result + "<br>");  // Si
+	
+	result = hasRelation(cPerro, "es_un", cGato);
+	document.write("¿Un perro es un gato?: " + result + "<br>");  // No
+	
+	result = hasRelation(cTino, "es_un", cGato);
+	document.write("¿Tino es un gato?: " + result + "<br>");  	  // No
+  }
+  </script>
+</head>
+<body onload="runExample()">
+
+</body>
+</html>

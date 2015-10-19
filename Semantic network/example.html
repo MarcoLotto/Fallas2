@@ -1,6 +1,8 @@
 <html>
 <head>
   <script src="RelationResolver.js"></script>
+  <script src="Relation.js"></script>
+
   <script>
   function runExample(){
     document.write("RED SEMÁNTICA" + "<br><br>");
@@ -12,6 +14,7 @@
 	var cPerro = new Concept("Perro");
 	var cGato = new Concept("Gato");
 	var cMamifero = new Concept("Mamifero");
+	var c60 = new Concept("60cm");
 	
 	// Creamos las relaciones
 	cBelo.addRelation("es_un", cPerro);
@@ -20,6 +23,12 @@
 	cPerro.addRelation("es_un", cMamifero);
 	cGato.addRelation("es_un", cMamifero);
 	
+	// Otra forma de declarar las relaciones
+	// Unidereccional
+	Relation.asDependency(c60, "tamaño", cBelo);
+	// Bidireccional
+	Relation.asRelation(cPerro, "pelea", cGato);
+
 	// Verificamos algunas relaciones con herencia
 	var result = hasRelation(cBelo, "es_un", cMamifero);
 	document.write("¿Belo es un mamifero?: " + result + "<br>");  // Si
@@ -32,6 +41,15 @@
 	
 	result = hasRelation(cTino, "es_un", cGato);
 	document.write("¿Tino es un gato?: " + result + "<br>");  	  // No
+
+	result = hasRelation(c60, "tamaño", cBelo);
+	document.write("¿60cm es el tamaño de Belo?: " + result + "<br>");  	  // Si
+
+	result = hasRelation(cPerro, "pelea", cGato);
+	document.write("¿Un perro se pelea con un gato?: " + result + "<br>");  	  // Si
+
+	result = hasRelation(cGato, "pelea", cPerro);
+	document.write("¿Y un gato con un perro?: " + result + "<br>");  	  // Si
   }
   </script>
 </head>

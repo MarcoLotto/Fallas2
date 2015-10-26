@@ -1,0 +1,59 @@
+<html>
+<head>
+  <script src="Frame.js"></script>
+  
+  <script>
+  function runExample(){
+    document.write("<h3>FRAMES</h3>");
+
+    // Creamos el frame
+	var frame = new Frame("Conferencia");
+	
+	// Declaramos los slots
+	var slot1 = new FrameSlot("Fecha");
+	var slot2 = new FrameSlot("Lugar");
+	var slot3 = new FrameSlot("Tema");
+	var slot4 = new FrameSlot("Orador");
+	
+	// Asignamos los slots al frame
+	frame.addSlot(slot1);
+	frame.addSlot(slot2);
+	frame.addSlot(slot3);
+	frame.addSlot(slot4);
+	
+	// Agregamos facets al frame
+	frame.declareFacet("Facet-1");
+	frame.declareFacet("Facet-2");
+	
+	// Le asignamos valores a los slots
+	slot1.setValue("13/05/2015");
+	slot2.setValue("Buenos Aires");
+	slot3.setValue("Frames");
+	slot4.setValue("Merlino");
+	
+	// Le asignamos valor a algunos facets de slots
+	slot1.setFacetValue("Facet-1", "Yo soy el valor 1");
+	slot2.setFacetValue("Facet-2", "Yo soy el valor 2");
+	slot3.setFacetValue("Facet-2", "Yo soy el valor 3");
+	
+	// Imprimimos el frame con sus slots y valores en pantalla
+	var slots = frame.getSlots();
+	document.write("<h3>Slots y sus valores en el frame</h3><table>");
+	for(var i=0; i < slots.length; i++){
+		var slot = slots[i];
+		document.write("<tr><td>" + slot.name + "</td><td>" + slot.value + "</td></tr>");
+	}
+	document.write("</table>");
+	
+	// Pedimos valores de facets para comprobación
+	document.write("<br><h3>Comprobamos los Facets asignados</h3>");
+	document.write("Valor Facet-1 en slot Fecha: " + slot1.getFacetValue("Facet-1"));
+	document.write("<br>Valor Facet-2 en slot Lugar: " + slot2.getFacetValue("Facet-2"));
+	document.write("<br>Valor Facet-2 en slot Tema: " + slot3.getFacetValue("Facet-2"));	
+  }
+  </script>
+</head>
+<body onload="runExample()">
+
+</body>
+</html>

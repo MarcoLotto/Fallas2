@@ -1,0 +1,41 @@
+<html>
+<head>
+  <script src="RelationResolver.js"></script>
+  <script src="Relation.js"></script>
+
+  <script>
+  function runExample(){   
+    // Creamos los conceptos
+	var cBelo = new Concept("Belo");
+	var cTino = new Concept("Tino");
+	var cSusi = new Concept("Susi");
+	var cPerro = new Concept("Perro");
+	var cGato = new Concept("Gato");
+	var cMamifero = new Concept("Mamifero");
+	var c60 = new Concept("60cm");
+	
+	// Creamos las relaciones
+	cBelo.addRelation("es_un", cPerro);
+	cTino.addRelation("es_un", cPerro);
+	cSusi.addRelation("es_un", cGato);
+	cPerro.addRelation("es_un", cMamifero);
+	cGato.addRelation("es_un", cMamifero);
+	
+	// Otra forma de declarar las relaciones
+	// Unidereccional
+	Relation.asDependency(c60, "tamaño", cBelo);
+	// Bidireccional
+	Relation.asRelation(cPerro, "pelea", cGato);
+	
+	// Mandamos a graficar
+	var concepts = [cBelo, cTino, cSusi, cPerro, cGato, cMamifero, c60];	
+	makeGraph(concepts);	
+  }
+  </script>
+</head>
+<body onload="runExample()">
+	<h3>Visualización gráfica de Red Semántica</h3>
+	<script src="graph.js"></script>
+
+</body>
+</html>
